@@ -1,6 +1,6 @@
 # Perceptron_2D
 
-![Image](https://i.ibb.co/0J5FPJY/singlelayer-perceptron.png) 
+![Image](https://i.ibb.co/6PFgnCk/singlelayer-perceptron.png) 
 
 An implementation of a two-dimensional single-layer perceptron as a binary classifier which predicts some known gates like i.e., AND, OR and NAND
 
