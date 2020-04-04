@@ -8,7 +8,7 @@ epochs = 50000
 train_set = [np.array([[0],[0]]),np.array([[0],[1]]),np.array([[1],[0]]),np.array([[1],[1]])]
 learning_rate = 0.1
 
-perceptron = p.Perceptron('leaky_relu','AND',learning_rate,epochs,train_set)
+perceptron = p.Perceptron('heavyside','NAND',learning_rate,epochs,train_set)
 
 cost_history = perceptron.train()
 

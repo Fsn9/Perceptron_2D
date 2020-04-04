@@ -18,7 +18,7 @@ def leaky_relu(x):
 def derivative_leaky_relu(x):
 	return np.array([1]) if  np.array_equal(x,np.maximum(0,x)) else np.array([0.01])	
 
-def unit_step(x):
+def heavyside(x):
 	return np.array([1]) if x > 0 else np.array([0])
 
 def tanh(x):

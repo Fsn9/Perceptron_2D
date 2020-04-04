@@ -3,6 +3,8 @@ import activation_functions as af
 import utilities as ut
 from random import choice
 
+MAXIMUM_TESTS = 15
+PLOT_SAMPLING = 10
 
 class Perceptron():
 	def __init__(self, activation_function, model, learning_rate, epochs, train_set):
@@ -32,13 +34,13 @@ class Perceptron():
 			x = choice(self.train_set)		
 			predicted_output,z = self.feed_forward(x)
 			cost = self.back_propagate(x,predicted_output,z)
-			if epoch % 10 == 0:
+			if epoch % PLOT_SAMPLING == 0:
 				self.cost_history.append(sum(cost[0].tolist()))
 		print('equation model:\n',self.weights[0][0],'x1 + ',self.weights[0][1],'x2',' +',self.bias[0][0])
 		return self.cost_history
 
 	def test(self):
-		for _ in range(15):
+		for _ in range(MAXIMUM_TESTS):
 			x = choice(self.train_set)
 			prediction,expected = self.predict(x)
 			print('x:',x,'\n','prediction: ',prediction,'\nexpected: ',expected)
@@ -56,6 +58,13 @@ class Perceptron():
 			# a = activation function
 			a = af.sigmoid(z)
 			# y = output
+			y = a
+		elif self.activation_function == 'heavyside':
+			# z = weighted sum
+			z = np.dot(self.weights,x) + self.bias
+			# a = activation function
+			a = af.heavyside(z)
+			# y = output 
 			y = a
 		elif self.activation_function == 'relu':
 			# z = weighted sum
@@ -92,6 +101,12 @@ class Perceptron():
 
 			self.weights -= self.learning_rate * np.dot(np.multiply(dCost_da,da_dz),dz_dw.T)
 			self.bias -= self.learning_rate * np.multiply(dCost_da,da_dz) * dz_db
+
+		elif self.activation_function == 'heavyside':	
+			error = predicted - expected
+
+			self.weights -= self.learning_rate * error * x.T
+			self.bias -= self.learning_rate * error
 
 		elif self.activation_function == 'relu':	
 			dCost_da = predicted - expected
