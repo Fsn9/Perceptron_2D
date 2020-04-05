@@ -2,6 +2,9 @@ import numpy as np
 import Perceptron as p
 import matplotlib.pyplot as plt
 import utilities as ut
+import UserInterface as ui
+import threading
+import queue
 # IMPLEMENTATION OF A 2D PERCEPTRON
 
 # Parameters
@@ -11,18 +14,17 @@ learning_rate = 0.1
 activation_function = 'leaky_relu'
 model = 'NAND'
 
+# Queue to be shared between perceptron and User Interface
+q = queue.Queue()
+
 # Perceptron
 perceptron = p.Perceptron(activation_function,model,learning_rate,epochs,train_set)
+perceptron_thread = threading.Thread(target = perceptron.run_perceptron)
+perceptron_thread.start()
 
-# train
-cost_history = perceptron.train()
+# User Interface
+ui = ui.UserInterface(306,166,perceptron,perceptron_thread)
+ui.mainloop()
 
-# test
-perceptron.test()
 
-# print results to the terminal
-perceptron.print_results()
-
-# plot the loss over epochs
-ut.plot([x for x in range(len(cost_history))],'epochs',cost_history,'cost')
 

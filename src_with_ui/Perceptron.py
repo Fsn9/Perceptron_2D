@@ -9,7 +9,7 @@ LEARNED_ENOUGH = 5
 
 class Perceptron():
 	def __init__(self, activation_function, model, learning_rate, epochs, train_set):
-		self.weights = np.random.rand(1,2) * 2 - 1 # mean 0, between -1 and 1
+		self.weights = np.random.rand(1,2) * 2 -1 # mean 0, between -1 and 1
 		self.activation_function = activation_function
 		self.model = model
 		self.learning_rate = learning_rate
@@ -164,3 +164,16 @@ class Perceptron():
 
 	def print_results(self):
 		print('equation model learned:\n',self.weights[0][0],'x1 + ',self.weights[0][1],'x2',' +',self.bias[0][0])
+
+	def run_perceptron(self):
+		# train
+		cost_history = self.train()
+
+		# test
+		self.test()
+
+		# print model learned
+		self.print_results()
+
+		# plot
+		#ut.plot([x for x in range(len(cost_history))],'epochs',cost_history,'cost')
